@@ -2,10 +2,10 @@
   "name": "collecting-draw-results",
   "version": "1.0.0",
   "description": "Cron job to collect lottery draw results from API and persist to database",
-  "main": "dist/index.js",
+  "main": "build/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "node build/index.js",
     "dev": "ts-node src/index.ts",
     "lint": "eslint src --ext .ts"
   },
@@ -13,13 +13,14 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
+    "express": "^5.2.1",
     "mongoose": "^8.4.0",
     "node-cron": "^3.0.3"
   },
   "devDependencies": {
-    "@types/node-cron": "^3.0.11",
+    "@types/express": "^5.0.6",
     "@types/node": "^20.12.7",
+    "@types/node-cron": "^3.0.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }

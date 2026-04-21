@@ -1,5 +1,6 @@
 import https from 'https';
 import { LatestResponse } from './types';
+import { getIssueInfos } from './issue';
 
 const API_URL = 'https://api.cc138001.com/server/lottery/latest/ygxy5';
 
@@ -55,10 +56,15 @@ export async function fetchLatestResult(): Promise<LatestResponse> {
         throw new Error(`API returned non-200 code: ${result.code}, msg: ${result.msg}`);
       }
 
+      const issueInfos = getIssueInfos();
+      if(result.data.issue !== issueInfos.preIssue) {
+        throw new Error(`Issue mismatch: ${result.data.issue} !== ${issueInfos.preIssue}`);
+      }
+
       return result;
     } catch (err) {
       lastError = err instanceof Error ? err : new Error(String(err));
-      console.warn(`[fetchLatest] Attempt ${attempt}/${MAX_RETRIES} failed: ${lastError.message}`);
+      // console.warn(`[fetchLatest] Attempt ${attempt}/${MAX_RETRIES} failed: ${lastError.message}`);
 
       if (attempt < MAX_RETRIES) {
         await sleep(RETRY_DELAY_MS * attempt);
